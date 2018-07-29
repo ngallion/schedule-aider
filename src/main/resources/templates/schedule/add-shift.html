@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+
+<span th:unless="${allShifts} and ${allShifts.size()}">No Shifts</span>
+
+<div th:each="shift : ${allShifts}">
+    <table th:object="${shift}">
+        <tr>
+            <td>Date:</td>
+            <td th:text="*{date}"></td>
+        </tr>
+        <tr>
+            <td>Start time:</td>
+            <td th:text="*{getHumanReadableStartTime()}"></td>
+        </tr>
+        <tr>
+            <td>End time:</td>
+            <td th:text="*{getHumanReadableEndTime()}"></td>
+        </tr>
+        <tr>
+            <td>Employee:</td>
+            <td th:text="*{employeeId}"></td>
+        </tr>
+    </table>
+    <br />
+</div>
+
+<form method="post" action="add-shift" th:object="${form}">
+    <div class="form-group">
+        <label th:for="date">Date</label>
+        <input type="date" th:field="*{date}" />
+        <span th:errors="*{date}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="startTime">Start Time</label>
+        <input type="time" th:field="*{startTime}" />
+        <span th:errors="*{startTime}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="endTime">End Time</label>
+        <input type="time" th:field="*{endTime}" />
+        <span th:errors="*{endTime}" class="error"></span>
+    </div>
+    <input type="submit" value="Submit Shift" />
+</form>
+
+</body>
+</html>
