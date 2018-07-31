@@ -3,7 +3,8 @@
 <head th:replace="fragments :: head">
 </head>
 <body>
-
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container">
     <form method="post" action="new" th:object="${schedule}">
         <div class="form-group">
             <label th:for="name">Name:</label>
@@ -19,6 +20,6 @@
         </div>
         <input type="submit" value="Create New Schedule" />
     </form>
-
+</div>
 </body>
 </html>

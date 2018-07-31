@@ -1,25 +1,44 @@
 package org.launchcode.scheduleaider.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.format.DateTimeFormatter;
 
+@Entity
 public class Shift {
 
+    @Id
+    @GeneratedValue
     private int id;
-    private static int nextId=0;
+
+    @ManyToOne
+    private Schedule schedule;
+
     private Date date;
+
     private Time startTime;
+
     private Time endTime;
+
     private int employeeId;
 
     public Shift() {
-        this.id = nextId;
-        nextId++;
     }
 
     public int getId() {
         return id;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
     }
 
     public Date getDate() {

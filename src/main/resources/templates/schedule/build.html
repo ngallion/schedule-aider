@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th th:each="title : ${dateTitles}">
+                <span th:text="${title}"></span>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <form method="post" action="add-shift" th:object="${shiftForm}">
+                    <div class="form-group">
+                        <label th:for="startTime">Start Time</label>
+                        <input type="time" th:field="*{startTime}" />
+                        <span th:errors="*{startTime}" class="error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:for="endTime">End Time</label>
+                        <input type="time" th:field="*{endTime}" />
+                        <span th:errors="*{endTime}" class="error"></span>
+                    </div>
+                    <input type="hidden" name="date" th:value="${dateValues.get(0)}" />
+                    <input type="hidden" name="scheduleId" th:value="${scheduleId}" />
+                    <input type="submit" value="Add Shift" />
+                </form>
+            </td>
+            <td>
+                <form method="post" action="add-shift" th:object="${shiftForm}">
+                    <div class="form-group">
+                        <label th:for="startTime">Start Time</label>
+                        <input type="time" th:field="*{startTime}" />
+                        <span th:errors="*{startTime}" class="error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:for="endTime">End Time</label>
+                        <input type="time" th:field="*{endTime}" />
+                        <span th:errors="*{endTime}" class="error"></span>
+                    </div>
+                    <input type="hidden" name="date" th:value="${dateValues.get(1)}" />
+                    <input type="hidden" name="scheduleId" th:value="${scheduleId}" />
+                    <input type="submit" value="Add Shift" />
+                </form>
+            </td>
+            <td>
+                <form method="post" action="add-shift" th:object="${shiftForm}">
+                    <div class="form-group">
+                        <label th:for="startTime">Start Time</label>
+                        <input type="time" th:field="*{startTime}" />
+                        <span th:errors="*{startTime}" class="error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:for="endTime">End Time</label>
+                        <input type="time" th:field="*{endTime}" />
+                        <span th:errors="*{endTime}" class="error"></span>
+                    </div>
+                    <input type="hidden" name="date" th:value="${dateValues.get(2)}" />
+                    <input type="hidden" name="scheduleId" th:value="${scheduleId}" />
+                    <input type="submit" value="Add Shift" />
+                </form>
+            </td>
+            <td>
+                <form method="post" action="add-shift" th:object="${shiftForm}">
+                    <div class="form-group">
+                        <label th:for="startTime">Start Time</label>
+                        <input type="time" th:field="*{startTime}" />
+                        <span th:errors="*{startTime}" class="error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:for="endTime">End Time</label>
+                        <input type="time" th:field="*{endTime}" />
+                        <span th:errors="*{endTime}" class="error"></span>
+                    </div>
+                    <input type="hidden" name="date" th:value="${dateValues.get(3)}" />
+                    <input type="hidden" name="scheduleId" th:value="${scheduleId}" />
+                    <input type="submit" value="Add Shift" />
+                </form>
+            </td>
+            <td>
+                <form method="post" action="add-shift" th:object="${shiftForm}">
+                    <div class="form-group">
+                        <label th:for="startTime">Start Time</label>
+                        <input type="time" th:field="*{startTime}" />
+                        <span th:errors="*{startTime}" class="error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:for="endTime">End Time</label>
+                        <input type="time" th:field="*{endTime}" />
+                        <span th:errors="*{endTime}" class="error"></span>
+                    </div>
+                    <input type="hidden" name="date" th:value="${dateValues.get(4)}" />
+                    <input type="hidden" name="scheduleId" th:value="${scheduleId}" />
+                    <input type="submit" value="Add Shift" />
+                </form>
+            </td>
+            <td>
+                <form method="post" action="add-shift" th:object="${shiftForm}">
+                    <div class="form-group">
+                        <label th:for="startTime">Start Time</label>
+                        <input type="time" th:field="*{startTime}" />
+                        <span th:errors="*{startTime}" class="error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:for="endTime">End Time</label>
+                        <input type="time" th:field="*{endTime}" />
+                        <span th:errors="*{endTime}" class="error"></span>
+                    </div>
+                    <input type="hidden" name="date" th:value="${dateValues.get(5)}" />
+                    <input type="hidden" name="scheduleId" th:value="${scheduleId}" />
+                    <input type="submit" value="Add Shift" />
+                </form>
+            </td>
+            <td>
+                <form method="post" action="add-shift" th:object="${shiftForm}">
+                    <div class="form-group">
+                        <label th:for="startTime">Start Time</label>
+                        <input type="time" th:field="*{startTime}" />
+                        <span th:errors="*{startTime}" class="error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:for="endTime">End Time</label>
+                        <input type="time" th:field="*{endTime}" />
+                        <span th:errors="*{endTime}" class="error"></span>
+                    </div>
+                    <input type="hidden" name="date" th:value="${dateValues.get(6)}" />
+                    <input type="hidden" name="scheduleId" th:value="${scheduleId}" />
+                    <input type="submit" value="Add Shift" />
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

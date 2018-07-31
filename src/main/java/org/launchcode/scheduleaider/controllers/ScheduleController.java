@@ -4,13 +4,14 @@ import org.launchcode.scheduleaider.forms.AddNewScheduleForm;
 import org.launchcode.scheduleaider.forms.AddShiftForm;
 import org.launchcode.scheduleaider.models.Schedule;
 import org.launchcode.scheduleaider.models.Shift;
+import org.launchcode.scheduleaider.models.data.ScheduleDao;
+import org.launchcode.scheduleaider.models.data.ShiftDao;
 import org.launchcode.scheduleaider.utilities.WeekGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -21,7 +22,11 @@ import java.util.Locale;
 @RequestMapping(value = "schedule")
 public class ScheduleController {
 
-    ArrayList<Shift> allShifts = new ArrayList<>();
+    @Autowired
+    private ScheduleDao scheduleDao;
+
+    @Autowired
+    private ShiftDao shiftDao;
 
     private ArrayList<String> getFutureWeeks(){
 
@@ -42,10 +47,20 @@ public class ScheduleController {
         return viewableWeeks;
     }
 
+    public String getHumanReadableDate(LocalDate date) {
+
+        String humanReadableDate = date.getDayOfWeek().toString().substring(0,3) + ", " +
+                date.getMonth().toString() + " " +
+                date.getDayOfMonth();
+
+        return humanReadableDate;
+
+    }
+
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String displayAddNewScheduleForm(Model model){
 
-        ArrayList<String> futureWeeks = getFutureWeeks();
+        ArrayList<String> futureWeeks = getFutureWeeks(); //gets list of possible schedule dates
 
         model.addAttribute("futureWeeks", futureWeeks);
         model.addAttribute("title", "Create New Schedule");
@@ -65,34 +80,60 @@ public class ScheduleController {
 
         newSchedule.setStartDate(startDate);
 
-        model.addAttribute("title", "Add to Schedule");
-        model.addAttribute("schedule", newSchedule);
+        scheduleDao.save(newSchedule);
 
-        return "schedule/add-shifts";
+        return "redirect:build/" + newSchedule.getId();
+//        return "schedule/build/" + newSchedule.getId();
+    }
+
+    @RequestMapping(value = "build/{scheduleId}", method = RequestMethod.GET)
+    public String displayAddShiftsForm(Model model, @PathVariable("scheduleId") int scheduleId) {
+
+        Schedule schedule = scheduleDao.findOne(scheduleId);
+
+        ArrayList<String> dateTitles = new ArrayList<>();
+        ArrayList<LocalDate> dateValues = new ArrayList<>();
+        LocalDate startDate = schedule.getStartDate().toLocalDate();
+        for (int i = 0; i < 7; i++){
+            dateTitles.add(getHumanReadableDate(startDate.plusDays(i)));
+            dateValues.add(startDate.plusDays(i));
+        }
+
+        model.addAttribute("title", "Add shifts to " + schedule.getName());
+        model.addAttribute("dateTitles", dateTitles);
+        model.addAttribute("dateValues", dateValues);
+        model.addAttribute("scheduleId", scheduleId);
+        model.addAttribute("shiftForm", new AddShiftForm(scheduleId));
+
+        return "schedule/build";
+
     }
 
     @RequestMapping(value = "add-shift", method = RequestMethod.GET)
     public String displayAddShiftForm(Model model){
         model.addAttribute("title", "Add Shift");
         model.addAttribute("form", new AddShiftForm());
-        model.addAttribute("allShifts", allShifts);
 
         return "schedule/add-shift";
     }
 
-    @RequestMapping(value = "add-shift", method = RequestMethod.POST)
-    public String processAddShiftForm(Model model, @ModelAttribute AddShiftForm form, Errors errors){
+    @RequestMapping(value = "build/add-shift", method = RequestMethod.POST)
+    public String processAddShiftForm(Model model, @ModelAttribute AddShiftForm form,
+                                      @RequestParam("scheduleId") int scheduleId,
+                                      @RequestParam("date") String date, Errors errors){
 
         Shift newShift = new Shift();
 
+        form.setDate(date);
         newShift.setDate(form.getDateOfTypeDate());
         newShift.setStartTime(form.getStartTimeOfTypeTime());
         newShift.setEndTime(form.getEndTimeOfTypeTime());
+        newShift.setSchedule(scheduleDao.findOne(scheduleId));
         newShift.setEmployeeId(1);
 
-        allShifts.add(newShift);
+        shiftDao.save(newShift);
 
-        return "redirect:add-shift";
+        return "redirect:" + scheduleId;
     }
 
 }
