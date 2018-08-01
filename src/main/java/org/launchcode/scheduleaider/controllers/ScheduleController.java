@@ -93,15 +93,23 @@ public class ScheduleController {
 
         ArrayList<String> dateTitles = new ArrayList<>();
         ArrayList<LocalDate> dateValues = new ArrayList<>();
+        ArrayList<Date> dateSQLValues = new ArrayList<>();
         LocalDate startDate = schedule.getStartDate().toLocalDate();
         for (int i = 0; i < 7; i++){
             dateTitles.add(getHumanReadableDate(startDate.plusDays(i)));
             dateValues.add(startDate.plusDays(i));
+            dateSQLValues.add(Date.valueOf(startDate.plusDays(i)));
+        }
+
+        ArrayList<Iterable<Shift>> currentSchedule = new ArrayList<>();
+        for (int i = 0; i < 7; i++){
+            currentSchedule.add(shiftDao.findByDate(dateSQLValues.get(i)));
         }
 
         model.addAttribute("title", "Add shifts to " + schedule.getName());
         model.addAttribute("dateTitles", dateTitles);
         model.addAttribute("dateValues", dateValues);
+        model.addAttribute("currentSchedule", currentSchedule);
         model.addAttribute("scheduleId", scheduleId);
         model.addAttribute("shiftForm", new AddShiftForm(scheduleId));
 

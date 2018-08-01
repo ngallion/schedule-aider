@@ -12,6 +12,15 @@
             </th>
         </tr>
         <tr>
+            <td th:each="day : ${currentSchedule}">
+                <table>
+                    <tr th:each="shift : ${day}">
+                        <td th:text="${shift.employeeId} + ': ' + ${shift.getHumanReadableStartTime()} + ' - ' + ${shift.getHumanReadableEndTime()}"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
             <td>
                 <form method="post" action="add-shift" th:object="${shiftForm}">
                     <div class="form-group">
