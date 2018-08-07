@@ -4,10 +4,51 @@
     <meta charset="UTF-8"/>
     <title th:text="${title}">Schedule Aider</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
 </head>
 <body>
 
-
+<nav th:fragment="navigation" class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/home">Schedule-Aider</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/home/">Home</a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">Schedules
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/schedule/view-all">View All</a></li>
+                        <li><a href="/schedule/new">Build a New Schedule</a></li>
+                        <li><a href="/schedule/build">Edit Existing Schedule</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">Employees
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/employee">View All</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><span class="glyphicon glyphicon-user"></span><span>Greetings, User!</span></li>
+                <li><span class="glyphicon glyphicon-log-out"></span> Logout</li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 </body>
 </html>

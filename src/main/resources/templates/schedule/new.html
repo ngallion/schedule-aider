@@ -3,14 +3,15 @@
 <head th:replace="fragments :: head">
 </head>
 <body>
-
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container">
     <form method="post" action="new" th:object="${schedule}">
         <div class="form-group">
             <label th:for="name">Name:</label>
             <input type="text" th:field="*{name}" />
         </div>
         <div class="form-group">
-            <select name="startDate">
+            <select th:for="weeksAhead" th:field="*{weeksAhead}">
                 <option th:each="week,iter : ${futureWeeks}"
                         th:text="${week}"
                         th:value="${iter.index}"
@@ -19,6 +20,6 @@
         </div>
         <input type="submit" value="Create New Schedule" />
     </form>
-
+</div>
 </body>
 </html>

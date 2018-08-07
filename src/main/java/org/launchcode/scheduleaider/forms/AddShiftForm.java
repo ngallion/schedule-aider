@@ -12,8 +12,13 @@ public class AddShiftForm {
     private String startTime;
     private String endTime;
     private String employeeId;
+    private int scheduleId;
 
     public AddShiftForm() {
+    }
+
+    public AddShiftForm(int scheduleId) {
+        this.scheduleId = scheduleId;
     }
 
     public String getDate() {
