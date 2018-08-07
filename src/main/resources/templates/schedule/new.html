@@ -11,7 +11,7 @@
             <input type="text" th:field="*{name}" />
         </div>
         <div class="form-group">
-            <select name="startDate">
+            <select th:for="weeksAhead" th:field="*{weeksAhead}">
                 <option th:each="week,iter : ${futureWeeks}"
                         th:text="${week}"
                         th:value="${iter.index}"

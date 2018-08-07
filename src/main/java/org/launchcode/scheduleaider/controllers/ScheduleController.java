@@ -102,8 +102,9 @@ public class ScheduleController {
         }
 
         ArrayList<Iterable<Shift>> currentSchedule = new ArrayList<>();
+
         for (int i = 0; i < 7; i++){
-            currentSchedule.add(shiftDao.findByDate(dateSQLValues.get(i)));
+            currentSchedule.add(shiftDao.findByDateAndScheduleId(dateSQLValues.get(i), scheduleId));
         }
 
         model.addAttribute("title", "Add shifts to " + schedule.getName());
