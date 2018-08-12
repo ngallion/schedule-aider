@@ -166,14 +166,36 @@ public class ScheduleController {
     @RequestMapping(value = "view/{scheduleId}", method = RequestMethod.GET)
     public String displayViewShiftForSelectedSchedule(Model model, @PathVariable("scheduleId") Integer scheduleId){
 
+        Iterable<Shift> shifts = shiftDao.findByScheduleId(scheduleId);
+        Date startDate = scheduleDao.findOne(scheduleId).getStartDate();
+        ArrayList<ArrayList<Shift>> shiftsByDay = new ArrayList<>();
+
+        for (int i = 0; i < 7; i++) {
+            ArrayList<Shift> dayOfSchedule = new ArrayList<>();
+            for (Shift shift : shifts) {
+                if (shift.getDate().toLocalDate().getDayOfWeek() == startDate.toLocalDate().plusDays(i).getDayOfWeek()) {
+                    dayOfSchedule.add(shift);
+                }
+            }
+            shiftsByDay.add(dayOfSchedule);
+        }
+
+
         model.addAttribute("title", "View Schedule");
         model.addAttribute("schedules", scheduleDao.findAll());
         model.addAttribute("dateTitles", getDatesForDaysOnScheduleById(scheduleId));
         model.addAttribute("selectedSchedule", scheduleDao.findOne(scheduleId));
-
-
+        model.addAttribute("shiftsByDay", shiftsByDay);
 
         return "schedule/view";
+    }
+
+    @RequestMapping(value = "view/{scheduleId}", method = RequestMethod.POST)
+    public String processViewShiftWhileViewingOtherShift(Model model, @PathVariable("scheduleId") Integer scheduleId,
+                                                         @RequestParam("selectedSchedule") Schedule selectedSchedule) {
+
+        return "redirect:" + selectedSchedule.getId();
+
     }
 
     @RequestMapping(value = "view", method = RequestMethod.POST)

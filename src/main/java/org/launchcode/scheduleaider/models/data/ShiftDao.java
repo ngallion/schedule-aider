@@ -12,4 +12,5 @@ import java.sql.Date;
 public interface ShiftDao extends CrudRepository<Shift, Integer> {
     Iterable<Shift> findByDate(Date date);
     Iterable<Shift> findByDateAndScheduleId(Date date, int id);
+    Iterable<Shift> findByScheduleId(int id);
 }
