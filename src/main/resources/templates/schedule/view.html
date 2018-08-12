@@ -19,7 +19,7 @@
     </form>
 </div>
 
-<div class="container" th:if="${selectedSchedule}">
+<div th:if="${selectedSchedule}">
     <table class="table">
         <tr>
             <th th:each="title : ${dateTitles}">
@@ -27,7 +27,7 @@
             </th>
         </tr>
         <tr>
-            <td th:each="day : ${selectedSchedule.getShifts()}">
+            <td th:each="day : ${shiftsByDay}">
                 <table>
                     <tr th:each="shift : ${day}">
                         <td th:text="${shift.getEmployeeId()} + ': ' + ${shift.getHumanReadableStartTime()} + ' - ' + ${shift.getHumanReadableEndTime()}"></td>
