@@ -57,6 +57,16 @@ public class ScheduleController {
 
     }
 
+    public ArrayList<String> getDatesForDaysOnScheduleById(int scheduleId) {
+        ArrayList<String> dateTitles = new ArrayList<>();
+        LocalDate startDate = scheduleDao.findOne(scheduleId).getStartDate().toLocalDate();
+        for (int i = 0; i < 7; i++){
+            dateTitles.add(getHumanReadableDate(startDate.plusDays(i)));
+        }
+
+        return dateTitles;
+    }
+
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String displayAddNewScheduleForm(Model model){
 
@@ -143,6 +153,34 @@ public class ScheduleController {
         shiftDao.save(newShift);
 
         return "redirect:" + scheduleId;
+    }
+
+    @RequestMapping(value = "view", method = RequestMethod.GET)
+    public String displayViewShiftForm(Model model){
+        model.addAttribute("title", "View Schedule");
+        model.addAttribute("schedules", scheduleDao.findAll());
+
+        return "schedule/view";
+    }
+
+    @RequestMapping(value = "view/{scheduleId}", method = RequestMethod.GET)
+    public String displayViewShiftForSelectedSchedule(Model model, @PathVariable("scheduleId") Integer scheduleId){
+
+        model.addAttribute("title", "View Schedule");
+        model.addAttribute("schedules", scheduleDao.findAll());
+        model.addAttribute("dateTitles", getDatesForDaysOnScheduleById(scheduleId));
+        model.addAttribute("selectedSchedule", scheduleDao.findOne(scheduleId));
+
+
+
+        return "schedule/view";
+    }
+
+    @RequestMapping(value = "view", method = RequestMethod.POST)
+    public String processViewShiftForm(Model model, @RequestParam("selectedSchedule") Schedule selectedSchedule){
+
+        return "redirect:view/" + selectedSchedule.getId();
+
     }
 
 }
