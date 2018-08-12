@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<title th:text="${title}">Schedule-Aider</title>
+
+<div class="container">
+    <form method="post" action="view">
+        <div class="form-group">
+            <select name="selectedSchedule">
+                <option th:each="schedule : ${schedules}"
+                        th:text="${schedule.name}"
+                        th:value="${schedule.id}"></option>
+            </select>
+            <input type="submit" value="Select Schedule" />
+        </div>
+    </form>
+</div>
+
+<div class="container" th:if="${selectedSchedule}">
+    <table class="table">
+        <tr>
+            <th th:each="title : ${dateTitles}">
+                <span th:text="${title}"></span>
+            </th>
+        </tr>
+        <tr>
+            <td th:each="day : ${selectedSchedule.getShifts()}">
+                <table>
+                    <tr th:each="shift : ${day}">
+                        <td th:text="${shift.getEmployeeId()} + ': ' + ${shift.getHumanReadableStartTime()} + ' - ' + ${shift.getHumanReadableEndTime()}"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

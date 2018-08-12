@@ -2,9 +2,7 @@ package org.launchcode.scheduleaider.models;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -19,7 +17,7 @@ public class Schedule {
     private Date startDate;
 
     @OneToMany
-    @JoinColumn(name = "shift_id")
+    @JoinColumn(name = "schedule_id")
     private List<Shift> shifts = new ArrayList<>();
 
     public Schedule() {
@@ -43,5 +41,9 @@ public class Schedule {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public List<Shift> getShifts() {
+        return shifts;
     }
 }
