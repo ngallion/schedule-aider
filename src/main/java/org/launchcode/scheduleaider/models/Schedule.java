@@ -2,6 +2,7 @@ package org.launchcode.scheduleaider.models;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Schedule {
 
     private String name;
 
-    private Date startDate;
+    private LocalDate startDate;
 
     @OneToMany
     @JoinColumn(name = "schedule_id")
@@ -35,11 +36,11 @@ public class Schedule {
         this.name = name;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
