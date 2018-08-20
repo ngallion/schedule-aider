@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
@@ -18,11 +20,11 @@ public class Shift {
     @ManyToOne
     private Schedule schedule;
 
-    private Date date;
+    private LocalDate date;
 
-    private Time startTime;
+    private LocalTime startTime;
 
-    private Time endTime;
+    private LocalTime endTime;
 
     private int employeeId;
 
@@ -41,40 +43,40 @@ public class Shift {
         this.schedule = schedule;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Time getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
     public String getHumanReadableStartTime() {
 
-        String humanReadableStartTime = this.startTime.toLocalTime().format(DateTimeFormatter.ofPattern("h:mm a"));
+        String humanReadableStartTime = this.startTime.format(DateTimeFormatter.ofPattern("h:mm a"));
 
         return humanReadableStartTime;
     }
 
-    public Time getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
     public String getHumanReadableEndTime() {
 
-        String humanReadableEndTime = this.endTime.toLocalTime().format(DateTimeFormatter.ofPattern("h:mm a"));
+        String humanReadableEndTime = this.endTime.format(DateTimeFormatter.ofPattern("h:mm a"));
 
         return humanReadableEndTime;
 

@@ -59,7 +59,7 @@ public class ScheduleController {
 
     public ArrayList<String> getDatesForDaysOnScheduleById(int scheduleId) {
         ArrayList<String> dateTitles = new ArrayList<>();
-        LocalDate startDate = scheduleDao.findOne(scheduleId).getStartDate().toLocalDate();
+        LocalDate startDate = scheduleDao.findOne(scheduleId).getStartDate();
         for (int i = 0; i < 7; i++){
             dateTitles.add(getHumanReadableDate(startDate.plusDays(i)));
         }
@@ -86,7 +86,7 @@ public class ScheduleController {
         newSchedule.setName(schedule.getName());
 
         WeekGenerator week = new WeekGenerator(Locale.FRANCE);
-        Date startDate = Date.valueOf(week.getFirstDay().plusWeeks(schedule.getWeeksAhead()));
+        LocalDate startDate = week.getFirstDay().plusWeeks(schedule.getWeeksAhead());
 
         newSchedule.setStartDate(startDate);
 
@@ -103,18 +103,16 @@ public class ScheduleController {
 
         ArrayList<String> dateTitles = new ArrayList<>();
         ArrayList<LocalDate> dateValues = new ArrayList<>();
-        ArrayList<Date> dateSQLValues = new ArrayList<>();
-        LocalDate startDate = schedule.getStartDate().toLocalDate();
+        LocalDate startDate = schedule.getStartDate();
         for (int i = 0; i < 7; i++){
             dateTitles.add(getHumanReadableDate(startDate.plusDays(i)));
             dateValues.add(startDate.plusDays(i));
-            dateSQLValues.add(Date.valueOf(startDate.plusDays(i)));
         }
 
         ArrayList<Iterable<Shift>> currentSchedule = new ArrayList<>();
 
         for (int i = 0; i < 7; i++){
-            currentSchedule.add(shiftDao.findByDateAndScheduleId(dateSQLValues.get(i), scheduleId));
+            currentSchedule.add(shiftDao.findByDateAndScheduleId(dateValues.get(i), scheduleId));
         }
 
         model.addAttribute("title", "Add shifts to " + schedule.getName());

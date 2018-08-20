@@ -29,8 +29,8 @@ public class AddShiftForm {
         this.date = date;
     }
 
-    public Date getDateOfTypeDate(){
-        return Date.valueOf(LocalDate.parse(this.date));
+    public LocalDate getDateOfTypeDate(){
+        return LocalDate.parse(this.date);
     }
 
     public String getStartTime() {
@@ -41,8 +41,8 @@ public class AddShiftForm {
         this.startTime = startTime;
     }
 
-    public Time getStartTimeOfTypeTime(){
-        return Time.valueOf(LocalTime.parse(this.startTime));
+    public LocalTime getStartTimeOfTypeTime(){
+        return LocalTime.parse(this.startTime);
     }
 
     public String getEndTime() {
@@ -53,8 +53,8 @@ public class AddShiftForm {
         this.endTime = endTime;
     }
 
-    public Time getEndTimeOfTypeTime(){
-        return Time.valueOf(LocalTime.parse(this.endTime));
+    public LocalTime getEndTimeOfTypeTime(){
+        return LocalTime.parse(this.endTime);
     }
 
     public String getEmployeeId() {
